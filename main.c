@@ -44,11 +44,11 @@ int main(int argc, char *argv[]) {
     }
 
     printf("Configuración:\n");
-    printf("Archivo: %s\n", config->file);
-    printf("Biblia: %s\n", config->bible);
-    printf("Libro: %s\n", config->book);
-    printf("Nombre de capitulo: %s\n", config->chapter);
-    printf("Numeros de capitulo: %s\n", config->chapter_numbers);
+    printf("\tArchivo: %s\n", config->file);
+    printf("\tBiblia: %s\n", config->bible);
+    printf("\tLibro: %s\n", config->book);
+    printf("\tNombre de capitulo: %s\n", config->chapter);
+    printf("\tNumeros de capitulo: %s\n", config->chapter_numbers);
 
     return 0;
 }
