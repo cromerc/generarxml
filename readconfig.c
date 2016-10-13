@@ -4,30 +4,19 @@
 #include <libxml/tree.h>
 #include <libxml/xmlIO.h>
 #include <libxml/xinclude.h>
+#include "main.h"
 
 #ifdef LIBXML_TREE_ENABLED
 
-static void
-print_element_names(xmlNode * a_node)
-{
-    xmlNode *cur_node = NULL;
-
-    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
-        if (cur_node->type == XML_ELEMENT_NODE) {
-            printf("node type: Element, name: %s\n", cur_node->name);
-        }
-
-        print_element_names(cur_node->children);
-    }
-}
-
-int readconfig(char *config_file) {
+int readconfig(char *config_file, CONFIG *config) {
     /* Initilize the library */
     LIBXML_TEST_VERSION
     
-    xmlParserCtxtPtr context;
-    xmlDocPtr config = NULL;
-    xmlNodePtr root_element = NULL;
+    xmlParserCtxt *context;
+    xmlDoc *config_xml = NULL;
+    xmlNode *root = NULL;
+    xmlNode *node = NULL;
+    xmlNode *subnode = NULL;
     
     context = xmlNewParserCtxt();
     if (context == NULL) {
@@ -35,8 +24,8 @@ int readconfig(char *config_file) {
         return 1;
     }
 
-    config = xmlCtxtReadFile(context, config_file, NULL, XML_PARSE_DTDVALID);
-    if (config == NULL) {
+    config_xml = xmlCtxtReadFile(context, config_file, NULL, XML_PARSE_DTDVALID);
+    if (config_xml == NULL) {
         fprintf(stderr, "Falló analizar %s\n", config_file);
     }
     else {
@@ -44,11 +33,44 @@ int readconfig(char *config_file) {
             fprintf(stderr, "Falló validar %s\n", config_file);
         }
 
-        root_element = xmlDocGetRootElement(config);
-        print_element_names(root_element);
-        
-        xmlFreeDoc(config);
+        root = xmlDocGetRootElement(config_xml);
+
+        node = root->xmlChildrenNode;
+        while (node != NULL) {
+            if ((!xmlStrcmp(node->name, (const xmlChar *) "output"))){
+                config->file = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+            }
+            else if ((!xmlStrcmp(node->name, (const xmlChar *) "bible"))){
+                config->bible = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+            }
+            else if ((!xmlStrcmp(node->name, (const xmlChar *) "book"))){
+                config->book = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+            }
+            else if ((!xmlStrcmp(node->name, (const xmlChar *) "chapter"))){
+                subnode = node->xmlChildrenNode;
+                while (subnode != NULL) {
+                    if ((!xmlStrcmp(subnode->name, (const xmlChar *) "name"))){
+                        config->chapter = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
+                    }
+                    if ((!xmlStrcmp(subnode->name, (const xmlChar *) "number"))){
+                        config->chapter_numbers = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
+                    }
+
+                    subnode = subnode->next;
+                }
+            }
+            
+            node = node->next;
+        }
+    
+        xmlFreeDoc(config_xml);
     }
+
+    if (config->file == NULL || config->bible == NULL || config->book == NULL || config->chapter == NULL || config->chapter_numbers == NULL) {
+        printf("El archivo de configuración es invalido!");
+        return 1;
+    }
+    
     xmlFreeParserCtxt(context);
 
     return 0;
@@ -56,7 +78,7 @@ int readconfig(char *config_file) {
 
 #else
 
-int readconfig(char *config_file) {
+int readconfig(char *config_file, CONFIG config) {
     fprintf(stderr, "libxml2 no tiene tree support compilado\n");
     return 1;
 }

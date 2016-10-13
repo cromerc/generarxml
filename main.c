@@ -1,14 +1,13 @@
-/* Christopher Cromer
- * Ingeniería Civil en Informática
- * */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <libxml/tree.h>
 #include "main.h"
 #include "readconfig.h"
 
 int main(int argc, char *argv[]) {
+    atexit(cleanup);
+    
     char *config_file = "";
 
     if (argc == 1) {
@@ -23,8 +22,7 @@ int main(int argc, char *argv[]) {
 		if ((strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--config") == 0) && i != argc - 1 && strlen(config_file) == 0) {
 			config_file = (char *) malloc(strlen(argv[i + 1]) * sizeof(char));
 			config_file = argv[i + 1];
-            /* Use config file */
-            break;
+            i++;
 		}
 		else {
             /* Incorrect usage or used the same option more than once */
@@ -33,12 +31,41 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-    int status = readconfig(config_file);
+    config = (CONFIG *) malloc (sizeof(CONFIG));
+
+    int status = readconfig(config_file, config);
     if (status != 0) {
         return 1;
     }
 
+    printf("file: %s\n", config->file);
+    printf("bible: %s\n", config->bible);
+
     return 0;
+}
+
+/* Cleanup on aisle 3
+ * */
+void cleanup() {
+    if (config != NULL) {
+        if (config->file != NULL) {
+            xmlFree(config->file);
+        }
+        if (config->bible != NULL) {
+            xmlFree(config->bible);
+        }
+        if (config->book != NULL) {
+            xmlFree(config->book);
+        }
+        if (config->chapter != NULL) {
+            xmlFree(config->chapter);
+        }
+        if (config->chapter_numbers != NULL) {
+            xmlFree(config->chapter_numbers);
+        }
+
+        free(config);
+    }
 }
 
 /* Print how to use the program
