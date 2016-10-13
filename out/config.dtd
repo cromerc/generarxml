@@ -1,0 +1,22 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT config (output,bible,book,chapter)>
+<!ATTLIST config xmlns CDATA #FIXED ''>
+
+<!ELEMENT output (#PCDATA)>
+<!ATTLIST output xmlns CDATA #FIXED ''>
+
+<!ELEMENT bible (#PCDATA)>
+<!ATTLIST bible xmlns CDATA #FIXED ''>
+
+<!ELEMENT book (#PCDATA)>
+<!ATTLIST book xmlns CDATA #FIXED ''>
+
+<!ELEMENT chapter (name,number)>
+<!ATTLIST chapter xmlns CDATA #FIXED ''>
+
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST name xmlns CDATA #FIXED ''>
+
+<!ELEMENT number (#PCDATA)>
+<!ATTLIST number xmlns CDATA #FIXED ''>
