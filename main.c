@@ -5,6 +5,8 @@
 #include "main.h"
 #include "readconfig.h"
 
+#ifdef LIBXML_TREE_ENABLED
+
 int main(int argc, char *argv[]) {
     atexit(cleanup);
     
@@ -38,11 +40,24 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("file: %s\n", config->file);
-    printf("bible: %s\n", config->bible);
+    printf("Configuración:\n");
+    printf("Archivo: %s\n", config->file);
+    printf("Biblia: %s\n", config->bible);
+    printf("Libro: %s\n", config->book);
+    printf("Nombre de capitulo: %s\n", config->chapter);
+    printf("Numeros de capitulo: %s\n", config->chapter_numbers);
 
     return 0;
 }
+
+#else
+
+int main(int argc, char *argv[]) {
+    fprintf(stderr, "libxml2 no tiene tree support compilado\n");
+    return 1;
+}
+
+#endif
 
 /* Cleanup on aisle 3
  * */

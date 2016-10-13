@@ -6,8 +6,6 @@
 #include <libxml/xinclude.h>
 #include "main.h"
 
-#ifdef LIBXML_TREE_ENABLED
-
 int readconfig(char *config_file, CONFIG *config) {
     /* Initilize the library */
     LIBXML_TEST_VERSION
@@ -75,12 +73,3 @@ int readconfig(char *config_file, CONFIG *config) {
 
     return 0;
 }
-
-#else
-
-int readconfig(char *config_file, CONFIG config) {
-    fprintf(stderr, "libxml2 no tiene tree support compilado\n");
-    return 1;
-}
-
-#endif
