@@ -14,11 +14,11 @@ int readconfig(char *config_file, CONFIG *config) {
     /* Initilize the library */
     LIBXML_TEST_VERSION
     
-    xmlParserCtxt *context;
-    xmlDoc *config_xml = NULL;
-    xmlNode *root = NULL;
-    xmlNode *node = NULL;
-    xmlNode *subnode = NULL;
+    xmlParserCtxtPtr context;
+    xmlDocPtr config_xml = NULL;
+    xmlNodePtr root = NULL;
+    xmlNodePtr node = NULL;
+    xmlNodePtr subnode = NULL;
     
     context = xmlNewParserCtxt();
     if (context == NULL) {
@@ -45,22 +45,37 @@ int readconfig(char *config_file, CONFIG *config) {
         node = root->xmlChildrenNode;
         while (node != NULL) {
             if ((!xmlStrcmp(node->name, (const xmlChar *) "output"))){
-                config->file = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                xmlChar *file = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                config->file = (char *) malloc(strlen((char *) file) + 1 * sizeof(char));
+                strcpy(config->file, (char *) file);
+                xmlFree(file);
             }
             else if ((!xmlStrcmp(node->name, (const xmlChar *) "bible"))){
-                config->bible = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                xmlChar *bible = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                config->bible = (char *) malloc(strlen((char *) bible) + 1 * sizeof(char));
+                strcpy(config->bible, (char *) bible);
+                xmlFree(bible);
             }
             else if ((!xmlStrcmp(node->name, (const xmlChar *) "book"))){
-                config->book = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                xmlChar *book = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                config->book = (char *) malloc(strlen((char *) book) + 1 * sizeof(char));
+                strcpy(config->book, (char *) book);
+                xmlFree(book);
             }
             else if ((!xmlStrcmp(node->name, (const xmlChar *) "chapter"))){
                 subnode = node->xmlChildrenNode;
                 while (subnode != NULL) {
                     if ((!xmlStrcmp(subnode->name, (const xmlChar *) "name"))){
-                        config->chapter = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
+                        xmlChar *chapter = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
+                        config->chapter = (char *) malloc(strlen((char *) chapter) + 1 * sizeof(char));
+                        strcpy(config->chapter, (char *) chapter);
+                        xmlFree(chapter);
                     }
                     if ((!xmlStrcmp(subnode->name, (const xmlChar *) "number"))){
-                        config->chapter_numbers = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
+                        xmlChar *chapter_numbers = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
+                        config->chapter_numbers = (char *) malloc(strlen((char *) chapter_numbers) + 1 * sizeof(char));
+                        strcpy(config->chapter_numbers, (char *) chapter_numbers);
+                        xmlFree(chapter_numbers);
                     }
 
                     subnode = subnode->next;
@@ -69,13 +84,13 @@ int readconfig(char *config_file, CONFIG *config) {
             
             node = node->next;
         }
-    
+        
         xmlFreeDoc(config_xml);
     }
 
     /* If any config info is missing, abort */
     if (config->file == NULL || config->bible == NULL || config->book == NULL || config->chapter == NULL || config->chapter_numbers == NULL) {
-        printf("El archivo de configuración es invalido!");
+        printf("El archivo de configuración es invalido!\n");
         xmlFreeParserCtxt(context);
         return 1;
     }

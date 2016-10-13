@@ -10,10 +10,10 @@
 /*
  * This program is designed to take a text file and convert part of it into xml.
  */
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
     atexit(cleanup);
-    
-    char *config_file = "";
+
+    char *config_file = NULL;
 
     if (argc == 1) {
         /* No arguments were passed */
@@ -24,21 +24,23 @@ int main(int argc, char *argv[]) {
     /* Read the command line arguments */
     int i;
 	for (i = 1; i < argc; i++) {
-		if ((strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--config") == 0) && i != argc - 1 && strlen(config_file) == 0) {
-			config_file = (char *) malloc(strlen(argv[i + 1]) * sizeof(char));
-			config_file = argv[i + 1];
+		if ((strcmp(argv[1], "-c") == 0 || strcmp(argv[1], "--config") == 0) && config_file == NULL) {
             i++;
+            config_file = (char *) malloc((strlen(argv[2]) + 1) * sizeof(char *));
+			strcpy(config_file, argv[2]);
 		}
 		else {
-            /* Incorrect usage or used the same option more than once */
+            /* Incorrect usage */
 			printusage(1);
 			return 1;
 		}
 	}
 
-    config = (CONFIG *) malloc (sizeof(CONFIG));
+    config = (CONFIG *) malloc(sizeof(CONFIG));
 
     int status = readconfig(config_file, config);
+    free(config_file);
+    config_file = NULL;
     if (status != 0) {
         return 1;
     }
@@ -49,6 +51,14 @@ int main(int argc, char *argv[]) {
     printf("\tLibro: %s\n", config->book);
     printf("\tNombre de capitulo: %s\n", config->chapter);
     printf("\tNumeros de capitulo: %s\n", config->chapter_numbers);
+
+    free(config->file);
+    free(config->bible);
+    free(config->book);
+    free(config->chapter);
+    free(config->chapter_numbers);
+    free(config);
+    config = NULL;
 
     return 0;
 }
@@ -73,19 +83,19 @@ void cleanup() {
     /* Cleanup on aisle 3 */
     if (config != NULL) {
         if (config->file != NULL) {
-            xmlFree(config->file);
+            free(config->file);
         }
         if (config->bible != NULL) {
-            xmlFree(config->bible);
+            free(config->bible);
         }
         if (config->book != NULL) {
-            xmlFree(config->book);
+            free(config->book);
         }
         if (config->chapter != NULL) {
-            xmlFree(config->chapter);
+            free(config->chapter);
         }
         if (config->chapter_numbers != NULL) {
-            xmlFree(config->chapter_numbers);
+            free(config->chapter_numbers);
         }
 
         free(config);

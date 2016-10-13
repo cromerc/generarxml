@@ -1,9 +1,9 @@
 struct configuration {
-    xmlChar *file;
-    xmlChar *bible;
-    xmlChar *book;
-    xmlChar *chapter;
-    xmlChar *chapter_numbers;
+    char *file;
+    char *bible;
+    char *book;
+    char *chapter;
+    char *chapter_numbers;
 } typedef CONFIG;
 
 CONFIG *config;
