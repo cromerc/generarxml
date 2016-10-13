@@ -6,6 +6,10 @@
 #include <libxml/xinclude.h>
 #include "main.h"
 
+/*
+ * This function reads the designated config file and save into int the
+ * config struct.
+ */
 int readconfig(char *config_file, CONFIG *config) {
     /* Initilize the library */
     LIBXML_TEST_VERSION
@@ -25,14 +29,19 @@ int readconfig(char *config_file, CONFIG *config) {
     config_xml = xmlCtxtReadFile(context, config_file, NULL, XML_PARSE_DTDVALID);
     if (config_xml == NULL) {
         fprintf(stderr, "Falló analizar %s\n", config_file);
+        xmlFreeParserCtxt(context);
+        return 1;
     }
     else {
         if (context->valid == 0) {
             fprintf(stderr, "Falló validar %s\n", config_file);
+            xmlFreeParserCtxt(context);
+            return 1;
         }
 
         root = xmlDocGetRootElement(config_xml);
 
+        /* Run through the nodes to find the config information. */
         node = root->xmlChildrenNode;
         while (node != NULL) {
             if ((!xmlStrcmp(node->name, (const xmlChar *) "output"))){
@@ -64,8 +73,10 @@ int readconfig(char *config_file, CONFIG *config) {
         xmlFreeDoc(config_xml);
     }
 
+    /* If any config info is missing, abort */
     if (config->file == NULL || config->bible == NULL || config->book == NULL || config->chapter == NULL || config->chapter_numbers == NULL) {
         printf("El archivo de configuración es invalido!");
+        xmlFreeParserCtxt(context);
         return 1;
     }
     

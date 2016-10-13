@@ -7,6 +7,9 @@
 
 #ifdef LIBXML_TREE_ENABLED
 
+/*
+ * This program is designed to take a text file and convert part of it into xml.
+ */
 int main(int argc, char *argv[]) {
     atexit(cleanup);
     
@@ -52,6 +55,10 @@ int main(int argc, char *argv[]) {
 
 #else
 
+/*
+ * Alternate main designed to prevent problems if the host system does not have
+ * tree support enabled during compile.
+ */
 int main(int argc, char *argv[]) {
     fprintf(stderr, "libxml2 no tiene tree support compilado\n");
     return 1;
@@ -59,9 +66,11 @@ int main(int argc, char *argv[]) {
 
 #endif
 
-/* Cleanup on aisle 3
- * */
+/*
+ * This function is called on exit to clean up the memory usage.
+ */
 void cleanup() {
+    /* Cleanup on aisle 3 */
     if (config != NULL) {
         if (config->file != NULL) {
             xmlFree(config->file);
@@ -83,8 +92,10 @@ void cleanup() {
     }
 }
 
-/* Print how to use the program
- * */
+/*
+ * Print information on the program's usage. If the argument is 1, the user
+ * put something incorrect as an argument.
+ */
 void printusage(int error) {
 	if (error == 1) {
 		printf("Opcion desconocido!\n\n");
