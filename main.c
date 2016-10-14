@@ -31,12 +31,20 @@ int main(int argc, char **argv) {
 		}
 		else {
             /* Incorrect usage */
+            if (config_file != NULL) {
+                free(config_file);
+            }
 			printusage(1);
 			return 1;
 		}
 	}
 
     config = (CONFIG *) malloc(sizeof(CONFIG));
+    config->file = NULL;
+    config->bible = NULL;
+    config->book = NULL;
+    config->chapter = NULL;
+    config->chapter_numbers = NULL;
 
     int status = readconfig(config_file, config);
     free(config_file);

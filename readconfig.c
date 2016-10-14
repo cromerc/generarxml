@@ -41,6 +41,12 @@ int readconfig(char *config_file, CONFIG *config) {
 
         root = xmlDocGetRootElement(config_xml);
 
+        if (root == NULL) {
+            fprintf(stderr,"El archivo %s no contiene xml\n", config_file);
+            xmlFreeDoc(config_xml);
+            return 1;
+        }
+
         /* Run through the nodes to find the config information. */
         node = root->xmlChildrenNode;
         while (node != NULL) {

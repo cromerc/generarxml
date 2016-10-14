@@ -3,7 +3,7 @@ BINDIR=out
 
 DEBUG_FLAGS=-Wall -Werror
 
-CFLAGS=$(DEBUG_FLAGS) -ggdb $(shell pkg-config libxml-2.0 --cflags) -ansi -I ./headers
+CFLAGS=$(DEBUG_FLAGS) -ggdb $(shell pkg-config libxml-2.0 --cflags) -ansi
 LDFLAGS=$(shell pkg-config libxml-2.0 --libs)
 	
 BINARY=generarxml
