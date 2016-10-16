@@ -25,11 +25,29 @@ int main(int argc, char **argv) {
     }
     
     /* Read the command line arguments */
+    #ifdef DEBUG
+        printf("Arguments:\n");
+    #endif
 	for (i = 1; i < argc; i++) {
+        #ifdef DEBUG
+            printf("\targ %d: %s\n", i, argv[i]);
+        #endif
 		if ((strcmp(argv[1], "-c") == 0 || strcmp(argv[1], "--config") == 0) && config_file == NULL) {
-            i++;
-            config_file = (char *) malloc((strlen(argv[2]) + 1) * sizeof(char *));
-			strcpy(config_file, argv[2]);
+            if (argc > i + 1) {
+                i++;
+                config_file = (char *) malloc((strlen(argv[2]) + 1) * sizeof(char *));
+                strcpy(config_file, argv[2]);
+                #ifdef DEBUG
+                    printf("\targ %d: %s\n", i, argv[i]);
+                #endif
+            }
+            else {
+                if (config_file != NULL) {
+                    free(config_file);
+                }
+                printusage(1);
+                return 1;
+            }
 		}
 		else {
             /* Incorrect usage */
@@ -97,20 +115,20 @@ int main(int argc, char *argv[]) {
  */
 void cleanup() {
     /* Cleanup on aisle 3 */
-    if (config != NULL) {
-        if (config->file != NULL) {
+    if (config) {
+        if (config->file) {
             free(config->file);
         }
-        if (config->bible != NULL) {
+        if (config->bible) {
             free(config->bible);
         }
-        if (config->book != NULL) {
+        if (config->book) {
             free(config->book);
         }
-        if (config->chapter != NULL) {
+        if (config->chapter) {
             free(config->chapter);
         }
-        if (config->chapter_numbers != NULL) {
+        if (config->chapter_numbers) {
             free(config->chapter_numbers);
         }
 

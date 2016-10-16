@@ -14,10 +14,9 @@ int readfile(CONFIG *config) {
     int i = 0;
     char *line = NULL;
     char **array = NULL;
-    size_t n = 0;
-    ssize_t nchr = 0;
-    size_t idx = 0;
-    size_t it = 0;
+    ssize_t chars = 0;
+    size_t lines = 0;
+    size_t j = 0;
     size_t new_max = MAX_LINES;
 
     char *ch = strtok(config->chapter_numbers, "-");
@@ -45,24 +44,26 @@ int readfile(CONFIG *config) {
     }
 
     if (!(array = calloc(new_max, sizeof(*array)))) {
-        fprintf(stderr, "allocación de memoria falló.");
+        fprintf(stderr, "Allocación de memoria falló.");
         return 1;
     }
 
-    while ((nchr = getline(&line, &n, file)) != -1) {
-        while (nchr > 0 && (line[nchr - 1] == '\n' || line[nchr - 1] == '\r' || line[nchr - 1] == ' ' || line[nchr - 1] == '\t')) {
+    while ((chars = getline(&line, &j, file)) != -1) {
+        while (chars > 0 && (line[chars - 1] == '\n' || line[chars - 1] == '\r' || line[chars - 1] == ' ' || line[chars - 1] == '\t')) {
             /* remove whitespace from end of the line */
-            line[nchr--] = 0;
+            chars--;
+            line[chars] = '\0';
         }
-        line[nchr] = '\0';
-        array[idx++] = strdup(line);
+        line[chars] = '\0';
+        lines++;
+        array[lines] = strdup(line);
 
         /* not enough memory for more lines, time to allocate more memory */
-        if (idx == new_max) {
+        if (lines == new_max) {
             new_max = new_max * 2;
             char **tmp = realloc(array, new_max * sizeof(*array));
             if (!tmp) {
-                fprintf(stderr, "reallocación de memoria falló.");
+                fprintf(stderr, "Reallocación de memoria falló.");
                 return 1;
             }
             array = tmp;
@@ -70,10 +71,10 @@ int readfile(CONFIG *config) {
     }
     
     /* free the extra unused memory */
-    if (new_max > idx) {
-        char **tmp = realloc(array, idx * sizeof(*array));
+    if (new_max > lines) {
+        char **tmp = realloc(array, lines * sizeof(*array));
         if (!tmp) {
-            fprintf(stderr, "reallocación de memoria falló.");
+            fprintf(stderr, "Reallocación de memoria falló.");
             return 1;
         }
         array = tmp;
@@ -86,23 +87,26 @@ int readfile(CONFIG *config) {
         free(line);
     }
 
-    printf ("\nLines in file:\n\n");
-    for (it = 0; it < 20; it++) {
-        line = latin2utf8(array[it]);
-        /* printf("  array [%lu]  %s\n", (long) it, line); */
+    for (j = 0; j < lines; j++) {
+        line = latin2utf8(array[j]);
+        /* printf("  array [%lu]  %s\n", (long) j, line); */
         if (line != NULL) {
             if (strcmp(line, config->bible) == 0) {
-                printf("Bible match: %d -> %s\n", (int) it + 1, line);
+                #ifdef DEBUG
+                    printf("Bible match: %lu -> %s\n", (long) j, line);
+                #endif
             }
             if (strcmp(line, config->book) == 0) {
-                printf("Book match: %d -> %s\n", (int) it + 1, line);
+                #ifdef DEBUG
+                    printf("Book match: %lu -> %s\n", (long) j, line);
+                #endif
             }
         }
         free(line);
     }
 
-    for (it = 0; it < idx; it++) {
-        free(array[it]);
+    for (j = 0; j < lines; j++) {
+        free(array[j]);
     }
     free(array);
 

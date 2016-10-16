@@ -53,18 +53,30 @@ int readconfig(char *config_file, CONFIG *config) {
             if ((!xmlStrcmp(node->name, (const xmlChar *) "output"))){
                 xmlChar *file = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
                 config->file = (char *) malloc(strlen((char *) file) + 1 * sizeof(char));
+                if (!config->file) {
+                    fprintf(stderr, "Allocación de memoria falló.");
+                    return 1;
+                }
                 strcpy(config->file, (char *) file);
                 xmlFree(file);
             }
             else if ((!xmlStrcmp(node->name, (const xmlChar *) "bible"))){
                 xmlChar *bible = xmlNodeListGetRawString(config_xml, node->xmlChildrenNode, 1);
                 config->bible = (char *) malloc(strlen((char *) bible) + 1 * sizeof(char));
+                if (!config->bible) {
+                    fprintf(stderr, "Allocación de memoria falló.");
+                    return 1;
+                }
                 strcpy(config->bible, (char *) bible);
                 xmlFree(bible);
             }
             else if ((!xmlStrcmp(node->name, (const xmlChar *) "book"))){
                 xmlChar *book = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
                 config->book = (char *) malloc(strlen((char *) book) + 1 * sizeof(char));
+                if (!config->book) {
+                    fprintf(stderr, "Allocación de memoria falló.");
+                    return 1;
+                }
                 strcpy(config->book, (char *) book);
                 xmlFree(book);
             }
@@ -74,12 +86,20 @@ int readconfig(char *config_file, CONFIG *config) {
                     if ((!xmlStrcmp(subnode->name, (const xmlChar *) "name"))){
                         xmlChar *chapter = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
                         config->chapter = (char *) malloc(strlen((char *) chapter) + 1 * sizeof(char));
+                        if (!config->chapter) {
+                            fprintf(stderr, "Allocación de memoria falló.");
+                            return 1;
+                        }
                         strcpy(config->chapter, (char *) chapter);
                         xmlFree(chapter);
                     }
                     if ((!xmlStrcmp(subnode->name, (const xmlChar *) "number"))){
                         xmlChar *chapter_numbers = xmlNodeListGetString(config_xml, subnode->xmlChildrenNode, 1);
                         config->chapter_numbers = (char *) malloc(strlen((char *) chapter_numbers) + 1 * sizeof(char));
+                        if (!config->chapter_numbers) {
+                            fprintf(stderr, "Allocación de memoria falló.");
+                            return 1;
+                        }
                         strcpy(config->chapter_numbers, (char *) chapter_numbers);
                         xmlFree(chapter_numbers);
                     }
