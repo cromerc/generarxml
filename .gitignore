@@ -32,4 +32,8 @@
 *.dSYM/
 *.su
 
-out/*
+src/out
+src/.deps
+config.log
+config.status
+Makefile
