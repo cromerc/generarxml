@@ -34,6 +34,7 @@
 
 src/out
 src/.deps
+src/.dirstamp
 config.log
 config.status
 Makefile
