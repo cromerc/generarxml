@@ -39,3 +39,5 @@ config.log
 config.status
 Makefile
 generarxml
+autom4te.cache
+*.tar.gz
