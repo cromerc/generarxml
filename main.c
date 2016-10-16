@@ -4,6 +4,7 @@
 #include <libxml/tree.h>
 #include "main.h"
 #include "readconfig.h"
+#include "readfile.h"
 
 #ifdef LIBXML_TREE_ENABLED
 
@@ -11,9 +12,11 @@
  * This program is designed to take a text file and convert part of it into xml.
  */
 int main(int argc, char **argv) {
-    atexit(cleanup);
-
     char *config_file = NULL;
+    int status;
+    int i;
+
+    atexit(cleanup);
 
     if (argc == 1) {
         /* No arguments were passed */
@@ -22,7 +25,6 @@ int main(int argc, char **argv) {
     }
     
     /* Read the command line arguments */
-    int i;
 	for (i = 1; i < argc; i++) {
 		if ((strcmp(argv[1], "-c") == 0 || strcmp(argv[1], "--config") == 0) && config_file == NULL) {
             i++;
@@ -46,7 +48,7 @@ int main(int argc, char **argv) {
     config->chapter = NULL;
     config->chapter_numbers = NULL;
 
-    int status = readconfig(config_file, config);
+    status = readconfig(config_file, config);
     free(config_file);
     config_file = NULL;
     if (status != 0) {
@@ -59,6 +61,12 @@ int main(int argc, char **argv) {
     printf("\tLibro: %s\n", config->book);
     printf("\tNombre de capitulo: %s\n", config->chapter);
     printf("\tNumeros de capitulo: %s\n", config->chapter_numbers);
+
+    status = readfile(config);
+    if (status != 0) {
+        printf("Falló leer Biblia.txt!\n");
+        return 1;
+    }
 
     free(config->file);
     free(config->bible);
@@ -120,5 +128,5 @@ void printusage(int error) {
 	}
 
 	printf("usage: generarxml [opciones] \n");
-    printf("  -s, --config <archivo>    archivo de configuración\n");
+    printf("  -c, --config <archivo>    archivo de configuración\n");
 }

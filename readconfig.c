@@ -11,14 +11,14 @@
  * config struct.
  */
 int readconfig(char *config_file, CONFIG *config) {
-    /* Initilize the library */
-    LIBXML_TEST_VERSION
-    
     xmlParserCtxtPtr context;
     xmlDocPtr config_xml = NULL;
     xmlNodePtr root = NULL;
     xmlNodePtr node = NULL;
     xmlNodePtr subnode = NULL;
+
+    /* Initilize the library */
+    LIBXML_TEST_VERSION
     
     context = xmlNewParserCtxt();
     if (context == NULL) {
@@ -26,7 +26,7 @@ int readconfig(char *config_file, CONFIG *config) {
         return 1;
     }
 
-    config_xml = xmlCtxtReadFile(context, config_file, NULL, XML_PARSE_DTDVALID);
+    config_xml = xmlCtxtReadFile(context, config_file, "UTF-8", XML_PARSE_DTDVALID);
     if (config_xml == NULL) {
         fprintf(stderr, "Falló analizar %s\n", config_file);
         xmlFreeParserCtxt(context);
@@ -57,7 +57,7 @@ int readconfig(char *config_file, CONFIG *config) {
                 xmlFree(file);
             }
             else if ((!xmlStrcmp(node->name, (const xmlChar *) "bible"))){
-                xmlChar *bible = xmlNodeListGetString(config_xml, node->xmlChildrenNode, 1);
+                xmlChar *bible = xmlNodeListGetRawString(config_xml, node->xmlChildrenNode, 1);
                 config->bible = (char *) malloc(strlen((char *) bible) + 1 * sizeof(char));
                 strcpy(config->bible, (char *) bible);
                 xmlFree(bible);

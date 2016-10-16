@@ -1,0 +1,4 @@
+This program requires the following:
+libxml2
+glibc compiled with iconv support
+gcc compiled with C99
