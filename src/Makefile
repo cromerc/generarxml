@@ -1,6 +1,9 @@
+# Este makefile es el antiguo y mas limitado
+
 CC=gcc
 BINDIR=out
-
+SRCDIR=.
+EXTRADIR=misc
 DEBUG_FLAGS=-Wall -Werror
 
 CFLAGS=$(DEBUG_FLAGS) -ggdb -Wconversion -std=c11 -D_DEFAULT_SOURCE $(shell pkg-config libxml-2.0 --cflags) -ansi
@@ -15,22 +18,23 @@ CPPFLAGS=-DDEBUG
 BINARY=generarxml
 
 OBJS = \
-	main.o \
-	readconfig.o \
-	readfile.o \
-	encoding.o \
-	string.o
+	$(SRCDIR)/main.o \
+	$(SRCDIR)/readconfig.o \
+	$(SRCDIR)/readfile.o \
+	$(SRCDIR)/encoding.o \
+	$(SRCDIR)/string.o
 
 all:	bin
 
 bin:	$(OBJS)
+	[ -d "out" ] && echo ¨out already exists¨ || mkdir -v out
 	$(CC)$(xml2-config --cflags --libs) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(BINDIR)/$(BINARY)
-	cp *.conf $(BINDIR)/
-	cp *.dtd $(BINDIR)/
-	cp Biblia.txt $(BINDIR)/
+	cp $(EXTRADIR)/*.conf $(BINDIR)/
+	cp $(EXTRADIR)/*.dtd $(BINDIR)/
+	cp $(EXTRADIR)/*.txt $(BINDIR)/
 
 clean:
-	rm -fR $(BINDIR)/* *.o
+	rm -fR $(BINDIR) $(SRCDIR)/*.o
 
 %.o:	%.c
 	$(CC)$(xml2-config --cflags --libs) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -c $< -o $@
