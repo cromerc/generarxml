@@ -1,4 +1,4 @@
-AC_INIT([generarxml], [1.0], [chris@cromer.cl])
+AC_INIT([generarxml], [1.0], [chris@cromer.cl], [generarxml], [https://www.cromer.cl])
 AC_PREFIX_DEFAULT([/usr])
 AC_CONFIG_SRCDIR([src/main.c])
 AM_INIT_AUTOMAKE([subdir-objects foreign])

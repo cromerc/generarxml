@@ -582,7 +582,7 @@ PACKAGE_TARNAME='generarxml'
 PACKAGE_VERSION='1.0'
 PACKAGE_STRING='generarxml 1.0'
 PACKAGE_BUGREPORT='chris@cromer.cl'
-PACKAGE_URL=''
+PACKAGE_URL='https://www.cromer.cl'
 
 ac_default_prefix=/usr
 ac_unique_file="src/main.c"
@@ -1357,6 +1357,7 @@ Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to <chris@cromer.cl>.
+generarxml home page: <https://www.cromer.cl>.
 _ACEOF
 ac_status=$?
 fi
@@ -4772,7 +4773,8 @@ $config_files
 Configuration commands:
 $config_commands
 
-Report bugs to <chris@cromer.cl>."
+Report bugs to <chris@cromer.cl>.
+generarxml home page: <https://www.cromer.cl>."
 
 _ACEOF
 cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
