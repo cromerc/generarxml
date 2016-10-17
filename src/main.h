@@ -1,3 +1,5 @@
+#define MEANING 42
+
 struct configuration {
     char *file;
     char *bible;

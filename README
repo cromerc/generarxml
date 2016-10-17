@@ -1,11 +1,14 @@
 Este programa necesita:
-libxml2
-glibc compilado con iconv
-gcc compilado con C11
+    libxml2
+    glibc compilado con iconv
+    gcc compilado con C11
 
 Para compilar el programa:
-./configure
-make
+    ./configure
+    make
 
 Para instalar el programa:
-make install
+    make install
+
+Uso del programa:
+    generarxml --config <archivo>

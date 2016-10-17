@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libxml/tree.h>
+#include <stdbool.h>
 #include "main.h"
 #include "readconfig.h"
 #include "readfile.h"
@@ -15,6 +16,7 @@ int main(int argc, char **argv) {
     char *config_file = NULL;
     int status;
     int i;
+    bool meaning = false;
 
     atexit(cleanup);
 
@@ -32,11 +34,11 @@ int main(int argc, char **argv) {
         #ifdef DEBUG
             printf("\targ %d: %s\n", i, argv[i]);
         #endif
-		if ((strcmp(argv[1], "-c") == 0 || strcmp(argv[1], "--config") == 0) && config_file == NULL) {
+		if ((strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--config") == 0) && config_file == NULL) {
             if (argc > i + 1) {
                 i++;
-                config_file = (char *) malloc((strlen(argv[2]) + 1) * sizeof(char *));
-                strcpy(config_file, argv[2]);
+                config_file = (char *) malloc((strlen(argv[i]) + 1) * sizeof(char *));
+                strcpy(config_file, argv[i]);
                 #ifdef DEBUG
                     printf("\targ %d: %s\n", i, argv[i]);
                 #endif
@@ -49,6 +51,9 @@ int main(int argc, char **argv) {
                 return 1;
             }
 		}
+		else if ((strcmp(argv[i], "-s") == 0 || strcmp(argv[i], "--significado") == 0) && meaning == false) {
+            meaning = true;
+		}
 		else {
             /* Incorrect usage */
             if (config_file != NULL) {
@@ -58,6 +63,15 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 	}
+
+    if (meaning == true) {
+        if (config_file != NULL) {
+            free(config_file);
+            config_file = NULL;
+        }
+        printf("El significado de la vida es: %d\n", MEANING);
+        return 0;
+    }
 
     config = (CONFIG *) malloc(sizeof(CONFIG));
     config->file = NULL;
@@ -147,4 +161,5 @@ void printusage(int error) {
 
 	printf("usage: generarxml [opciones] \n");
     printf("  -c, --config <archivo>    archivo de configuración\n");
+    printf("  -s, --significado         imprimir el significado de la vida\n");
 }

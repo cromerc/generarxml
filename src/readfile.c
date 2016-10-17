@@ -35,6 +35,11 @@ int readfile(CONFIG *config) {
         printf("Start chapter: %d\nEnd chapter: %d\n", start, end);
     #endif
 
+    if (end != 0 && start > end) {
+        printf("Archivo de configuración invalido!");
+        return 1;
+    }
+
     i = 0;
 
     file = fopen("Biblia.txt", "r");

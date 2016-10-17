@@ -1,4 +1,4 @@
-# Este makefile es el antiguo y mas limitado
+# Este makefile es el antiguo y mas limitado, no puede detectar el entorno para verificar que la compilación va a funcionar
 
 CC=gcc
 BINDIR=out
