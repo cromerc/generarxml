@@ -39,7 +39,7 @@ AM_PATH_XML2(2.9.0,,AC_MSG_ERROR([
 *** Libxml is required to build generarxml; Available at
 http://www.libxml.org/.]))
 
-AM_CFLAGS=(`xml2-config --cflags`)
+AM_CFLAGS=(`xml2-config --cflags --libs`)
 
 PKG_CHECK_MODULES([libxml2], [libxml-2.0])
 
