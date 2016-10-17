@@ -9,8 +9,8 @@
 
 int readfile(CONFIG *config) {
     FILE *file = NULL;
-    int start;
-    int end;
+    int start = 0;
+    int end = 0;
     int i = 0;
     char *line = NULL;
     char **array = NULL;

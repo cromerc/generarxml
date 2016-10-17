@@ -12,6 +12,7 @@ generarxml_SOURCES = src/main.c \
 	src/string.h
 generarxml_CPPFLAGS = $(XML_CPPFLAGS)
 generarxml_LDFLAGS= $(XML_LIBS)
+generarxml_LDADD = ${libxml2_LIBS}
 EXTRA_DIST = misc/Biblia.txt \
 	misc/config.dtd \
 	misc/chris.conf \

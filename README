@@ -1,5 +1,6 @@
 Este programa necesita:
     libxml2
+    libxslt
     glibc compilado con iconv
     gcc compilado con C11
 
