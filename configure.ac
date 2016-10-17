@@ -41,7 +41,7 @@ http://www.libxml.org/.]))
 
 AM_CFLAGS=(`xml2-config --cflags`)
 
-PKG_CHECK_MODULES(LIBXML2, libxml-2.0)
+PKG_CHECK_MODULES([libxml2], [libxml-2.0])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
