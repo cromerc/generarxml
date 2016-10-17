@@ -108,7 +108,7 @@ am_generarxml_OBJECTS = src/generarxml-main.$(OBJEXT) \
 	src/generarxml-encoding.$(OBJEXT) \
 	src/generarxml-string.$(OBJEXT)
 generarxml_OBJECTS = $(am_generarxml_OBJECTS)
-generarxml_LDADD = $(LDADD)
+generarxml_DEPENDENCIES =
 generarxml_LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(generarxml_LDFLAGS) \
 	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
@@ -297,6 +297,7 @@ generarxml_SOURCES = src/main.c \
 
 generarxml_CPPFLAGS = $(XML_CPPFLAGS)
 generarxml_LDFLAGS = $(XML_LIBS)
+generarxml_LDADD = ${libxml2_LIBS}
 EXTRA_DIST = misc/Biblia.txt \
 	misc/config.dtd \
 	misc/chris.conf \
