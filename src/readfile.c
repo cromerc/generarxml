@@ -65,7 +65,10 @@ int readfile(CONFIG *config) {
 
         /* not enough memory for more lines, time to allocate more memory */
         if (lines == new_max) {
-            new_max = new_max * 2;
+            /* uses more memory but runs faster */
+            /*new_max = new_max * 2;*/
+            /* uses less memory but runs slower */ 
+            new_max = new_max + MAX_LINES;
             char **tmp = realloc(array, new_max * sizeof(*array));
             if (!tmp) {
                 fprintf(stderr, "Reallocación de memoria falló.");
