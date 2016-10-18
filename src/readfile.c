@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <sys/types.h>
 #include "main.h"
 #include "readfile.h"
@@ -10,13 +11,19 @@ int readfile(CONFIG *config) {
     FILE *file = NULL;
     int start = 0;
     int end = 0;
+    int length;
     int i = 0;
     char *line = NULL;
+    char *temp = NULL;
     char **array = NULL;
     ssize_t chars = 0;
     size_t lines = 0;
     size_t j = 0;
     size_t new_max = MAX_LINES;
+    bool matches[3];
+    matches[0] = false;
+    matches[1] = false;
+    matches[2] = false;
 
     char *ch = strtok(config->chapter_numbers, "-");
     while (ch != NULL) {
@@ -101,14 +108,31 @@ int readfile(CONFIG *config) {
         /* printf("  array [%lu]  %s\n", (long) j, line); */
         if (line != NULL) {
             if (strcmp(line, config->bible) == 0) {
+                matches[0] = true;
+                matches[1] = false;
+                matches[2] = false;
                 #ifdef DEBUG
-                    printf("Bible match: %lu -> %s\n", (long) j, line);
+                    printf("Bible match: %lu -> %s\n", (long) j + 1, line);
                 #endif
             }
             if (strcmp(line, config->book) == 0) {
+                matches[1] = true;
+                matches[2] = false;
                 #ifdef DEBUG
-                    printf("Book match: %lu -> %s\n", (long) j, line);
+                    printf("Book match: %lu -> %s\n", (long) j + 1, line);
                 #endif
+            }
+            for (i = start; i <=end; i++) {
+                length = snprintf(NULL, 0, "%d", i) + strlen(config->chapter);
+                temp = (char *) malloc((length + 2) * sizeof(char));
+                snprintf(temp, length + 2, "%s %d", config->chapter, i);
+                if (strcmp(line, temp) == 0) {
+                    matches[2] = true;
+                    #ifdef DEBUG
+                        printf("Chapter match: %lu -> %s\n", (long) j + 1, line);
+                    #endif
+                }
+                free(temp);
             }
         }
         free(line);
