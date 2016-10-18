@@ -1,7 +1,10 @@
 AC_INIT([generarxml], [1.0], [chris@cromer.cl], [generarxml], [https://www.cromer.cl])
 AC_PREFIX_DEFAULT([/usr])
 AC_CONFIG_SRCDIR([src/main.c])
-AM_INIT_AUTOMAKE([subdir-objects foreign])
+AM_INIT_AUTOMAKE([foreign])
+
+AC_CONFIG_MACRO_DIR([m4])
+
 AC_PROG_CC
 
 AX_CHECK_COMPILE_FLAG([-std=c11], [
@@ -43,5 +46,9 @@ AM_CFLAGS=(`xml2-config --cflags --libs`)
 
 PKG_CHECK_MODULES([libxml2], [libxml-2.0])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+    src/Makefile
+])
+
+
 AC_OUTPUT

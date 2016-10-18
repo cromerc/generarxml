@@ -35,9 +35,11 @@
 src/out
 src/.deps
 src/.dirstamp
+.deps
 config.log
 config.status
 Makefile
-generarxml
+src/Makefile
+src/generarxml
 autom4te.cache
 *.tar.gz

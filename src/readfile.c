@@ -5,7 +5,6 @@
 #include "main.h"
 #include "readfile.h"
 #include "encoding.h"
-#include "string.h"
 
 int readfile(CONFIG *config) {
     FILE *file = NULL;
