@@ -1,5 +1,7 @@
-#! /bin/sh
+#!/bin/sh
 
-aclocal \
+mkdir -p m4 \
+&& aclocal \
 && automake --add-missing --copy \
-&& autoconf
+&& autoconf \
+&& rm -rf config.status config.log Makefile src/Makefile m4 autom4te.cache
