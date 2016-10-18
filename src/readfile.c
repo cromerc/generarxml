@@ -59,15 +59,12 @@ int readfile(CONFIG *config) {
             line[chars] = '\0';
         }
         line[chars] = '\0';
-        lines++;
         array[lines] = strdup(line);
+        lines++;
 
         /* not enough memory for more lines, time to allocate more memory */
         if (lines == new_max) {
-            /* uses more memory but runs faster */
-            /*new_max = new_max * 2;*/
-            /* uses less memory but runs slower */ 
-            new_max = new_max + MAX_LINES;
+            new_max = new_max * 2;
             char **tmp = realloc(array, new_max * sizeof(*array));
             if (!tmp) {
                 fprintf(stderr, "Reallocación de memoria falló.");
@@ -95,7 +92,9 @@ int readfile(CONFIG *config) {
     }
 
     for (j = 0; j < lines; j++) {
-        line = latin2utf8(array[j]);
+        if (array[j] != NULL) {
+            line = latin2utf8(array[j]);
+        }
         /* printf("  array [%lu]  %s\n", (long) j, line); */
         if (line != NULL) {
             if (strcmp(line, config->bible) == 0) {
@@ -110,6 +109,7 @@ int readfile(CONFIG *config) {
             }
         }
         free(line);
+        line = NULL;
     }
 
     for (j = 0; j < lines; j++) {

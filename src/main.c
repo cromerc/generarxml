@@ -161,5 +161,5 @@ void printusage(int error) {
 
 	printf("usage: generarxml [opciones] \n");
     printf("  -c, --config <archivo>    archivo de configuración\n");
-    printf("  -s, --significado         imprimir el significado de la vida\n");
+    /*printf("  -s, --significado         imprimir el significado de la vida\n");*/
 }
