@@ -94,7 +94,8 @@ int main(int argc, char **argv) {
     printf("\tNombre de capitulo: %s\n", config->chapter);
     printf("\tNumeros de capitulo: %s\n", config->chapter_numbers);
 
-    status = readfile(config);
+    book = (BOOK *) malloc(sizeof(BOOK));
+    status = readfile(config, book);
     if (status != 0) {
         printf("Falló leer Biblia.txt!\n");
         return 1;
@@ -129,6 +130,9 @@ int main(int argc, char *argv[]) {
  */
 void cleanup() {
     /* Cleanup on aisle 3 */
+    int i;
+    int j;
+    
     if (config) {
         if (config->file) {
             free(config->file);
@@ -147,6 +151,18 @@ void cleanup() {
         }
 
         free(config);
+    }
+
+    if (book) { 
+        for (i = 0; i < book->chapters; i++) {
+            for (j = 0; j < book->chapter[i]->verses; j++) {
+                free(book->chapter[i]->verse[j]);
+            }
+            free(book->chapter[i]->verse);
+            free(book->chapter[i]);
+        }
+        free(book->chapter);
+        free(book);
     }
 }
 

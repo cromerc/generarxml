@@ -2,17 +2,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include "main.h"
 #include "readfile.h"
 #include "encoding.h"
 
-int readfile(CONFIG *config) {
+int readfile(CONFIG *config, BOOK *book) {
     FILE *file = NULL;
+    CHAPTER *chapter = NULL;
     int start = 0;
     int end = 0;
+    int chapters = 1;
+    int verse = 0;
     int length;
     int i = 0;
+    int k = 0;
+    int l = 0;
     char *line = NULL;
     char *temp = NULL;
     char **array = NULL;
@@ -41,10 +47,23 @@ int readfile(CONFIG *config) {
         printf("Start chapter: %d\nEnd chapter: %d\n", start, end);
     #endif
 
-    if (end != 0 && start > end) {
-        printf("Archivo de configuración invalido!");
-        return 1;
+    if (end != 0) {
+        if (start > end) {
+            printf("Archivo de configuración invalido!");
+            return 1;
+        }
+        else {
+            chapters = (end - start) + 1;
+        }
     }
+
+    #ifdef DEBUG
+        printf("Chapters: %d\n", chapters);
+    #endif
+
+    book->chapters = chapters;
+    book->current = -1;
+    book->chapter = (CHAPTER **) malloc((chapters + 1) * sizeof(CHAPTER *));
 
     i = 0;
 
@@ -83,7 +102,7 @@ int readfile(CONFIG *config) {
             array = tmp;
         }
     }
-    
+
     /* free the extra unused memory */
     if (new_max > lines) {
         char **tmp = realloc(array, lines * sizeof(*array));
@@ -128,11 +147,83 @@ int readfile(CONFIG *config) {
                 snprintf(temp, length + 2, "%s %d", config->chapter, i);
                 if (strcmp(line, temp) == 0) {
                     matches[2] = true;
+                    book->current++;
+                    book->chapter[book->current] = (CHAPTER *) malloc(sizeof(CHAPTER));
+                    chapter = book->chapter[book->current];
+                    chapter->current = -1;
+                    chapter->verses = 0;
+                    chapter->verse = (char **) malloc(sizeof(char *));
                     #ifdef DEBUG
                         printf("Chapter match: %lu -> %s\n", (long) j + 1, line);
                     #endif
                 }
                 free(temp);
+            }
+            if (matches[0] == true && matches[1] == true && matches[2] == true) {
+                length = snprintf(NULL, 0, "%d", end + 1) + strlen(config->chapter);
+                temp = (char *) malloc((length + 2) * sizeof(char));
+                snprintf(temp, length + 2, "%s %d", config->chapter, end + 1);
+                if (strcmp(line, temp) == 0) {
+                    free(line);
+                    free(temp);
+                    line = NULL;
+                    break;
+                }
+                if (temp) {
+                    free(temp);
+                }
+
+                temp = (char *) malloc((strlen(line) + 1) * sizeof(char));
+                /* If it's a verse, match */
+                for (i = 0; i <= 2; i++) {
+                    if (line[i] == ' ') {
+                        temp[i] = '\0';
+
+                        verse = atoi(temp);
+                        if (temp) {
+                            free(temp);
+                        }
+
+                        l = 0;
+                        temp = (char *) malloc((strlen(line) + 1) * sizeof(char));
+                        for (k = i + 1; k < strlen(line) - 1; (k++)) {
+                            /*printf("i: %d k: %d chars: %d\n", i, k, strlen(line));*/
+                            temp[l] = line[k];
+                            l++;
+                        }
+                        temp[l] = '\0';
+
+                        chapter->current++;
+                        chapter->verses++;
+                        chapter->verse = (char **) realloc(chapter->verse, chapter->verses * sizeof(char *));
+                        chapter->verse[chapter->current] = (char *) malloc((strlen(temp) + 1) * sizeof(char));
+                        memcpy(chapter->verse[chapter->current], temp, strlen(temp) + 1);
+
+                        /*printf("%d - %s\n", verse, chapter->verses[chapter->current]);*/
+
+                        if (temp) {
+                            free(temp);
+                        }
+                        break;
+                    }
+                    if (!isdigit(line[i])) {
+                        if (temp) {
+                            free(temp);
+                        }
+                        break;
+                    }
+                    else {
+                        temp[i] = line[i];
+                    }
+                }
+            }
+            if (matches[0] == true && matches[1] == true && matches[2] == true && strcmp(line, "------------------------------------------------------------------------") == 0) {
+                #ifdef DEBUG
+                    printf("Bible end match: %lu -> %s\n", (long) j + 1, line);
+                #endif
+                free(line);
+                line = NULL;
+                break;
             }
         }
         free(line);

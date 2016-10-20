@@ -1,4 +1,4 @@
-#define MEANING 42
+#define MEANING 30 + 12
 
 struct configuration {
     char *file;
@@ -8,7 +8,20 @@ struct configuration {
     char *chapter_numbers;
 } typedef CONFIG;
 
+struct chapterdata {
+    int current;
+    int verses;
+    char **verse;
+} typedef CHAPTER;
+
+struct bookdata {
+    int current;
+    int chapters;
+    CHAPTER **chapter;
+} typedef BOOK;
+
 CONFIG *config;
+BOOK *book;
 
 void cleanup();
 void printusage(int error);
