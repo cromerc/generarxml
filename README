@@ -13,3 +13,8 @@ Para instalar el programa:
 
 Uso del programa:
     generarxml --config <archivo>
+
+Si no deseas instaler el program, puedes copiarlo a la carpeta misc para correrlo:
+    cp src/generarxml misc/generarxml
+    cd misc
+    ./generarxml --config <archivo>
