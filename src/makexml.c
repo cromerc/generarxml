@@ -5,6 +5,7 @@
 #include <libxml/tree.h>
 #include "main.h"
 
+
 int makexml() {
     int i = 0;
     int j = 0;
@@ -24,6 +25,9 @@ int makexml() {
     doc = xmlNewDoc(BAD_CAST "1.0");
     bibletag = xmlNewNode(NULL, BAD_CAST "Biblia");
     xmlDocSetRootElement(doc, bibletag);
+
+    /* add attribute to bible tag */
+    xmlNewProp(bibletag, BAD_CAST "nombre", BAD_CAST config->bible);
 
     /* add dtd */
     xmlCreateIntSubset(doc, BAD_CAST "Biblia", NULL, BAD_CAST "generarxml.dtd");

@@ -2,8 +2,6 @@
 #include <string.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-#include <libxml/xmlIO.h>
-#include <libxml/xinclude.h>
 #include "main.h"
 
 /*
