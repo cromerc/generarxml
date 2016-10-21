@@ -5,8 +5,10 @@
 #include <libxml/tree.h>
 #include "main.h"
 
-
-int makexml() {
+/*
+ * This function generates the xml and saves it to the output file.
+ */
+void makexml() {
     int i = 0;
     int j = 0;
     int length;
@@ -19,7 +21,7 @@ int makexml() {
     xmlNodePtr versetag = NULL;
     xmlNodePtr node = NULL;
     xmlNodePtr text = NULL;
-    
+
     LIBXML_TEST_VERSION;
 
     doc = xmlNewDoc(BAD_CAST "1.0");
@@ -40,6 +42,7 @@ int makexml() {
     xmlAddChild(node, text);
     xmlAddChild(booktag, node);
 
+    /* add the chapters */
     for (i = 0; i < book->chapters; i++) {
         chaptertag = xmlNewNode(NULL, BAD_CAST "Capitulo");
         xmlAddChild(booktag, chaptertag);
@@ -55,6 +58,7 @@ int makexml() {
 
         free(temp);
 
+        /* add the verses */
         chapter = book->chapter[i];
         chapter->current = 0;
         for (chapter->current = 0; chapter->current < chapter->verses; chapter->current++) {
@@ -90,6 +94,4 @@ int makexml() {
     xmlFreeDoc(doc);
     xmlCleanupParser();
     xmlMemoryDump();
-    
-    return 0;
 }

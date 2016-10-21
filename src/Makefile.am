@@ -13,4 +13,4 @@ generarxml_SOURCES = main.c \
 	encoding.h
 generarxml_CPPFLAGS = $(XML_CPPFLAGS)
 generarxml_LDFLAGS= $(XML_LIBS)
-generarxml_LDADD = ${libxml2_LIBS} 
+generarxml_LDADD = ${libxml2_LIBS}

@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
         printusage(0);
         return 1;
     }
-    
+
     /* Read the command line arguments */
     #ifdef DEBUG
         printf("Arguments:\n");
@@ -147,7 +147,7 @@ void cleanup() {
     /* Cleanup on aisle 3 */
     int i;
     int j;
-    
+
     if (config) {
         if (config->file) {
             free(config->file);
@@ -168,7 +168,7 @@ void cleanup() {
         free(config);
     }
 
-    if (book) { 
+    if (book) {
         for (i = 0; i < book->chapters; i++) {
             for (j = 0; j < book->chapter[i]->verses; j++) {
                 free(book->chapter[i]->verse[j]);

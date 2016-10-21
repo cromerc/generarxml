@@ -15,9 +15,9 @@ int readconfig(char *config_file) {
     xmlNodePtr node = NULL;
     xmlNodePtr subnode = NULL;
 
-    /* Initilize the library */
+    /* initilize the library */
     LIBXML_TEST_VERSION
-    
+
     context = xmlNewParserCtxt();
     if (context == NULL) {
         fprintf(stderr, "No pudo alocar contexto de analizador!\n");
@@ -105,10 +105,10 @@ int readconfig(char *config_file) {
                     subnode = subnode->next;
                 }
             }
-            
+
             node = node->next;
         }
-        
+
         xmlFreeDoc(config_xml);
     }
 
@@ -118,7 +118,7 @@ int readconfig(char *config_file) {
         xmlFreeParserCtxt(context);
         return 1;
     }
-    
+
     xmlFreeParserCtxt(context);
 
     return 0;

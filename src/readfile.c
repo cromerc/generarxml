@@ -8,6 +8,10 @@
 #include "readfile.h"
 #include "encoding.h"
 
+/*
+ * This function reads Biblia.txt, searches for the information in config,
+ * and stores it into an array of strings to be used later to create the xml.
+ */
 int readfile() {
     FILE *file = NULL;
     CHAPTER *chapter = NULL;
@@ -126,6 +130,7 @@ int readfile() {
         }
         if (line != NULL) {
             if (strcmp(line, config->bible) == 0) {
+                /* found the bible */
                 matches[0] = true;
                 matches[1] = false;
                 matches[2] = false;
@@ -134,6 +139,7 @@ int readfile() {
                 #endif
             }
             if (strcmp(line, config->book) == 0) {
+                /* found the book */
                 matches[1] = true;
                 matches[2] = false;
                 #ifdef DEBUG
@@ -145,6 +151,7 @@ int readfile() {
                 temp = (char *) malloc((length + 2) * sizeof(char));
                 snprintf(temp, length + 2, "%s %d", config->chapter, i);
                 if (strcmp(line, temp) == 0) {
+                    /* found a chapter */
                     matches[2] = true;
                     book->current++;
                     book->chapter[book->current] = (CHAPTER *) malloc(sizeof(CHAPTER));
@@ -160,6 +167,7 @@ int readfile() {
                 free(temp);
             }
             if (matches[0] == true && matches[1] == true && matches[2] == true) {
+                /* 3 matches, start getting the verses */
                 length = snprintf(NULL, 0, "%d", end + 1) + strlen(config->chapter);
                 temp = (char *) malloc((length + 2) * sizeof(char));
                 snprintf(temp, length + 2, "%s %d", config->chapter, end + 1);
@@ -215,6 +223,7 @@ int readfile() {
                 }
             }
             if (matches[0] == true && matches[1] == true && matches[2] == true && strcmp(line, "------------------------------------------------------------------------") == 0) {
+                /* end of a section and we already have 3 matches, no reason to continue */
                 #ifdef DEBUG
                     printf("Bible end match: %lu -> %s\n", (long) j + 1, line);
                 #endif
