@@ -1,16 +1,11 @@
 <?xml encoding="UTF-8"?>
-
 <!ELEMENT Biblia (Libro) >
 <!ATTLIST Biblia xmlns CDATA #FIXED ''>
-
 <!ELEMENT Libro (Nombre,Capitulo)>
 <!ATTLIST Libro xmlns CDATA #FIXED ''>
-
 <!ELEMENT Capitulo (Nombre,Versiculo)>
 <!ATTLIST Capitulo xmlns CDATA #FIXED ''>
-
 <!ELEMENT Nombre (#PCDATA)>
 <!ATTLIST Nombre xmlns CDATA #FIXED ''>
-
 <!ELEMENT Versiculo (#PCDATA)>
 <!ATTLIST Versiculo xmlns CDATA #FIXED ''>
