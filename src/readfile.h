@@ -1,2 +1,2 @@
 #define MAX_LINES 100
-int readfile(CONFIG *config, BOOK *book);
+int readfile();

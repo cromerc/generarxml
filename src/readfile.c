@@ -8,7 +8,7 @@
 #include "readfile.h"
 #include "encoding.h"
 
-int readfile(CONFIG *config, BOOK *book) {
+int readfile() {
     FILE *file = NULL;
     CHAPTER *chapter = NULL;
     int start = 0;
@@ -124,7 +124,6 @@ int readfile(CONFIG *config, BOOK *book) {
         if (array[j] != NULL) {
             line = latin2utf8(array[j]);
         }
-        /* printf("  array [%lu]  %s\n", (long) j, line); */
         if (line != NULL) {
             if (strcmp(line, config->bible) == 0) {
                 matches[0] = true;
@@ -150,6 +149,7 @@ int readfile(CONFIG *config, BOOK *book) {
                     book->current++;
                     book->chapter[book->current] = (CHAPTER *) malloc(sizeof(CHAPTER));
                     chapter = book->chapter[book->current];
+                    chapter->chapter = i;
                     chapter->current = -1;
                     chapter->verses = 0;
                     chapter->verse = (char **) malloc(sizeof(char *));
@@ -187,7 +187,6 @@ int readfile(CONFIG *config, BOOK *book) {
                         l = 0;
                         temp = (char *) malloc((strlen(line) + 1) * sizeof(char));
                         for (k = i + 1; k < strlen(line) - 1; (k++)) {
-                            /*printf("i: %d k: %d chars: %d\n", i, k, strlen(line));*/
                             temp[l] = line[k];
                             l++;
                         }
@@ -198,8 +197,6 @@ int readfile(CONFIG *config, BOOK *book) {
                         chapter->verse = (char **) realloc(chapter->verse, chapter->verses * sizeof(char *));
                         chapter->verse[chapter->current] = (char *) malloc((strlen(temp) + 1) * sizeof(char));
                         memcpy(chapter->verse[chapter->current], temp, strlen(temp) + 1);
-
-                        /*printf("%d - %s\n", verse, chapter->verses[chapter->current]);*/
 
                         if (temp) {
                             free(temp);

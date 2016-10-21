@@ -1,1 +1,1 @@
-int readconfig(char *config_file, CONFIG *config);
+int readconfig(char *config_file);

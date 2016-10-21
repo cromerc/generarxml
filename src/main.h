@@ -9,6 +9,7 @@ struct configuration {
 } typedef CONFIG;
 
 struct chapterdata {
+    int chapter;
     int current;
     int verses;
     char **verse;

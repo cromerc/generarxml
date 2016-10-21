@@ -43,3 +43,4 @@ src/Makefile
 src/generarxml
 autom4te.cache
 *.tar.gz
+*.xml

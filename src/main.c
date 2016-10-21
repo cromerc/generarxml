@@ -6,8 +6,9 @@
 #include "main.h"
 #include "readconfig.h"
 #include "readfile.h"
+#include "makexml.h"
 
-#ifdef LIBXML_TREE_ENABLED
+#if defined(LIBXML_TREE_ENABLED) && defined(LIBXML_OUTPUT_ENABLED)
 
 /*
  * This program is designed to take a text file and convert part of it into xml.
@@ -80,12 +81,24 @@ int main(int argc, char **argv) {
     config->chapter = NULL;
     config->chapter_numbers = NULL;
 
-    status = readconfig(config_file, config);
-    free(config_file);
-    config_file = NULL;
+    status = readconfig(config_file);
     if (status != 0) {
         return 1;
     }
+
+    if (strcmp(config->file, argv[0]) == 0 ||
+            strcmp(config->file, config_file) == 0 ||
+            strcmp(config->file, "Biblia.txt") == 0 ||
+            strcmp(config->file, "config.dtd") == 0 ||
+            strcmp(config->file, "generarxml.dtd") == 0) {
+        free(config_file);
+        config_file = NULL;
+        printf("Nombre de archivo de salida invalido!\n");
+        return 1;
+    }
+
+    free(config_file);
+    config_file = NULL;
 
     printf("Configuración:\n");
     printf("\tArchivo: %s\n", config->file);
@@ -95,11 +108,13 @@ int main(int argc, char **argv) {
     printf("\tNumeros de capitulo: %s\n", config->chapter_numbers);
 
     book = (BOOK *) malloc(sizeof(BOOK));
-    status = readfile(config, book);
+    status = readfile();
     if (status != 0) {
         printf("Falló leer Biblia.txt!\n");
         return 1;
     }
+
+    makexml();
 
     free(config->file);
     free(config->bible);
@@ -119,7 +134,7 @@ int main(int argc, char **argv) {
  * tree support enabled during compile.
  */
 int main(int argc, char *argv[]) {
-    fprintf(stderr, "libxml2 no tiene tree support compilado\n");
+    fprintf(stderr, "libxml2 no está configurado correctamente\n");
     return 1;
 }
 

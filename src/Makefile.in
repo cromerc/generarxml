@@ -100,7 +100,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_generarxml_OBJECTS = generarxml-main.$(OBJEXT) \
 	generarxml-readconfig.$(OBJEXT) generarxml-readfile.$(OBJEXT) \
-	generarxml-encoding.$(OBJEXT)
+	generarxml-makexml.$(OBJEXT) generarxml-encoding.$(OBJEXT)
 generarxml_OBJECTS = $(am_generarxml_OBJECTS)
 am__DEPENDENCIES_1 =
 generarxml_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -266,6 +266,8 @@ generarxml_SOURCES = main.c \
 	readconfig.h \
 	readfile.c \
 	readfile.h \
+	makexml.c \
+	makexml.h \
 	encoding.c \
 	encoding.h
 
@@ -360,6 +362,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-encoding.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-makexml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-readconfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-readfile.Po@am__quote@
 
@@ -418,6 +421,20 @@ generarxml-readfile.obj: readfile.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='readfile.c' object='generarxml-readfile.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o generarxml-readfile.obj `if test -f 'readfile.c'; then $(CYGPATH_W) 'readfile.c'; else $(CYGPATH_W) '$(srcdir)/readfile.c'; fi`
+
+generarxml-makexml.o: makexml.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT generarxml-makexml.o -MD -MP -MF $(DEPDIR)/generarxml-makexml.Tpo -c -o generarxml-makexml.o `test -f 'makexml.c' || echo '$(srcdir)/'`makexml.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/generarxml-makexml.Tpo $(DEPDIR)/generarxml-makexml.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='makexml.c' object='generarxml-makexml.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o generarxml-makexml.o `test -f 'makexml.c' || echo '$(srcdir)/'`makexml.c
+
+generarxml-makexml.obj: makexml.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT generarxml-makexml.obj -MD -MP -MF $(DEPDIR)/generarxml-makexml.Tpo -c -o generarxml-makexml.obj `if test -f 'makexml.c'; then $(CYGPATH_W) 'makexml.c'; else $(CYGPATH_W) '$(srcdir)/makexml.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/generarxml-makexml.Tpo $(DEPDIR)/generarxml-makexml.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='makexml.c' object='generarxml-makexml.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o generarxml-makexml.obj `if test -f 'makexml.c'; then $(CYGPATH_W) 'makexml.c'; else $(CYGPATH_W) '$(srcdir)/makexml.c'; fi`
 
 generarxml-encoding.o: encoding.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT generarxml-encoding.o -MD -MP -MF $(DEPDIR)/generarxml-encoding.Tpo -c -o generarxml-encoding.o `test -f 'encoding.c' || echo '$(srcdir)/'`encoding.c

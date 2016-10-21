@@ -7,6 +7,8 @@ generarxml_SOURCES = main.c \
 	readconfig.h \
 	readfile.c \
 	readfile.h \
+	makexml.c \
+	makexml.h \
 	encoding.c \
 	encoding.h
 generarxml_CPPFLAGS = $(XML_CPPFLAGS)

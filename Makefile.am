@@ -4,4 +4,5 @@ SUBDIRS = src
 
 EXTRA_DIST = misc/Biblia.txt \
 	misc/config.dtd \
+	misc/generarxml.dtd \
 	misc/chris.conf
