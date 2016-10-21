@@ -116,6 +116,8 @@ int main(int argc, char **argv) {
 
     makexml();
 
+    printf("El achivo %s ha sido generado.\n", config->file);
+
     free(config->file);
     free(config->bible);
     free(config->book);

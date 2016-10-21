@@ -241,5 +241,10 @@ int readfile() {
     }
     free(array);
 
+    if (matches[0] == false || matches[1] == false || matches[2] == false) {
+        printf("No pudo encontrar lo solicitado en Biblia.txt!\n");
+        return 1;
+    }
+
     return 0;
 }
