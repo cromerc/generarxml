@@ -7,8 +7,10 @@
 
 int makexml() {
     int i = 0;
+    int j = 0;
     int length;
     char *temp = NULL;
+    CHAPTER *chapter = NULL;
     xmlDocPtr doc = NULL;
     xmlNodePtr bibletag = NULL;
     xmlNodePtr booktag  = NULL;
@@ -47,8 +49,30 @@ int makexml() {
         xmlAddChild(node, text);
         xmlAddChild(chaptertag, node);
 
-        versetag = xmlNewNode(NULL, BAD_CAST "Versiculo");
-        xmlAddChild(chaptertag, versetag);
+        free(temp);
+
+        chapter = book->chapter[i];
+        chapter->current = 0;
+        for (chapter->current = 0; chapter->current < chapter->verses; chapter->current++) {
+            versetag = xmlNewNode(NULL, BAD_CAST "Versiculo");
+            xmlAddChild(chaptertag, versetag);
+
+            length = snprintf(NULL, 0, "%d", chapter->current + 1) + strlen("VERSICULO");
+            temp = (char *) malloc((length + 2) * sizeof(char));
+            snprintf(temp, length + 2, "VERSICULO %d", chapter->current + 1);
+
+            node = xmlNewNode(NULL, BAD_CAST "Nombre");
+            text = xmlNewText(BAD_CAST temp);
+            xmlAddChild(node, text);
+            xmlAddChild(versetag, node);
+
+            free(temp);
+
+            node = xmlNewNode(NULL, BAD_CAST "Descripcion");
+            text = xmlNewText(BAD_CAST chapter->verse[chapter->current]);
+            xmlAddChild(node, text);
+            xmlAddChild(versetag, node);
+        }
     }
 
     #ifdef DEBUG
