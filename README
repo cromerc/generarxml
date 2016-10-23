@@ -1,6 +1,12 @@
+Integrante:
+    Christopher Cromer
+        Sección 1
+        MATEO 16-20
+
 Este programa necesita:
     libxml2
     libxslt
+    pkg-config
     glibc compilado con iconv
     gcc compilado con C11
 
