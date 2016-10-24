@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
  * This function is called on exit to clean up the memory usage.
  */
 void cleanup() {
-    /* Cleanup on aisle 3 */
+    /* cleanup on aisle 3 */
     int i;
     int j;
 
