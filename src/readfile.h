@@ -8,4 +8,4 @@
  * This function reads Biblia.txt, searches for the information in config,
  * and stores it into an array of strings to be used later to create the xml.
  */
-int readfile();
+int read_file();

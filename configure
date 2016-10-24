@@ -3653,12 +3653,12 @@ fi
 # Check whether --with-debug was given.
 if test "${with_debug+set}" = set; then :
   withval=$with_debug; case $with_debug in
-    yes)	$as_echo "#define DEBUG 1" >>confdefs.h
+    yes)    $as_echo "#define DEBUG 1" >>confdefs.h
 
-		;;
-    no)		;;
-    *)		as_fn_error $? "\"--with-debug does not take an argument.\"" "$LINENO" 5
-		;;
+        ;;
+    no)     ;;
+    *)      as_fn_error $? "\"--with-debug does not take an argument.\"" "$LINENO" 5
+        ;;
 esac
 fi
 
@@ -3667,12 +3667,12 @@ fi
 # Check whether --with-debug_encoding was given.
 if test "${with_debug_encoding+set}" = set; then :
   withval=$with_debug_encoding; case $with_debug_encoding in
-    yes)	$as_echo "#define DEBUG_ENCODING 1" >>confdefs.h
+    yes)    $as_echo "#define DEBUG_ENCODING 1" >>confdefs.h
 
-		;;
-    no)		;;
-    *)		as_fn_error $? "\"--with-debug-encoding does not take an argument.\"" "$LINENO" 5
-		;;
+        ;;
+    no)     ;;
+    *)      as_fn_error $? "\"--with-debug-encoding does not take an argument.\"" "$LINENO" 5
+        ;;
 esac
 fi
 

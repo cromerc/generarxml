@@ -20,20 +20,20 @@ AC_PATH_PROG([M4], [m4])
 
 AC_ARG_WITH(debug, [AS_HELP_STRING([--with-debug], [include debug messages])],
 [case $with_debug in
-    yes)	AC_DEFINE(DEBUG)
-		;;
-    no)		;;
-    *)		AC_MSG_ERROR(["--with-debug does not take an argument."])
-		;;
+    yes)    AC_DEFINE(DEBUG)
+        ;;
+    no)     ;;
+    *)      AC_MSG_ERROR(["--with-debug does not take an argument."])
+        ;;
 esac])
 
 AC_ARG_WITH(debug_encoding, [AS_HELP_STRING([--with-debug-encoding], [include encoding debug messages])],
 [case $with_debug_encoding in
-    yes)	AC_DEFINE(DEBUG_ENCODING)
-		;;
-    no)		;;
-    *)		AC_MSG_ERROR(["--with-debug-encoding does not take an argument."])
-		;;
+    yes)    AC_DEFINE(DEBUG_ENCODING)
+        ;;
+    no)     ;;
+    *)      AC_MSG_ERROR(["--with-debug-encoding does not take an argument."])
+        ;;
 esac])
 
 AC_DEFINE(_DEFAULT_SOURCE)
@@ -49,6 +49,5 @@ PKG_CHECK_MODULES([libxml2], [libxml-2.0])
 AC_CONFIG_FILES([Makefile
     src/Makefile
 ])
-
 
 AC_OUTPUT

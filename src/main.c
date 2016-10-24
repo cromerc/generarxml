@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
     if (argc == 1) {
         /* No arguments were passed */
-        printusage(0);
+        print_usage(0);
         return 1;
     }
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
                 if (config_file != NULL) {
                     free(config_file);
                 }
-                printusage(1);
+                print_usage(1);
                 return 1;
             }
 		}
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
             if (config_file != NULL) {
                 free(config_file);
             }
-			printusage(1);
+			print_usage(1);
 			return 1;
 		}
 	}
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
     config->chapter = NULL;
     config->chapter_numbers = NULL;
 
-    status = readconfig(config_file);
+    status = read_config(config_file);
     if (status != 0) {
         return 1;
     }
@@ -108,13 +108,13 @@ int main(int argc, char **argv) {
     printf("\tNumeros de capitulo: %s\n", config->chapter_numbers);
 
     book = (BOOK *) malloc(sizeof(BOOK));
-    status = readfile();
+    status = read_file();
     if (status != 0) {
         printf("Falló leer Biblia.txt!\n");
         return 1;
     }
 
-    makexml();
+    make_xml();
 
     printf("El achivo %s ha sido generado.\n", config->file);
 
@@ -187,7 +187,7 @@ void cleanup() {
  * Print information on the program's usage. If the argument is 1, the user
  * put something incorrect as an argument.
  */
-void printusage(int error) {
+void print_usage(int error) {
 	if (error == 1) {
 		printf("Opcion desconocido!\n\n");
 	}

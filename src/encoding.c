@@ -6,14 +6,14 @@
 /*
  * This function converts the latin1 ISO_8859-1 encoding into utf-8.
  */
-char *latin2utf8(char *input) {
+char *latin_to_utf8(char *input) {
     if (input && strlen(input) > 0) {
         iconv_t cd = iconv_open("UTF-8", "ISO_8859-1");
 
         char temp[strlen(input)];
         memcpy(temp, input, strlen(input) + 1);
 
-        char *in_buf = &temp[0];
+        char *in_buffer = &temp[0];
         size_t in_left = sizeof(temp);
 
         /* The more tildes and ñs that the string has, the longer the size needs to be.
@@ -21,11 +21,11 @@ char *latin2utf8(char *input) {
          * double the size.
          */
         char output[strlen(temp) * 2];
-        char *out_buf = &output[0];
+        char *out_buffer = &output[0];
         size_t out_left = sizeof(output);
 
         do {
-            if (iconv(cd, &in_buf, &in_left, &out_buf, &out_left) == (size_t) -1) {
+            if (iconv(cd, &in_buffer, &in_left, &out_buffer, &out_left) == (size_t) -1) {
                 #ifdef DEBUG
                     printf("%s\n", input);
                     perror("iconv");
@@ -35,11 +35,11 @@ char *latin2utf8(char *input) {
             }
         }
         while (in_left > 0 && out_left > 0);
-        *out_buf = 0;
+        *out_buffer = 0;
 
         #if defined(DEBUG) && defined(DEBUG_ENCODING)
-            printf("latin2utf8: input: %s\n", input);
-            printf("latin2utf8: output: %s\n", output);
+            printf("latin to UTF-8: input: %s\n", input);
+            printf("latin to UTF-8: output: %s\n", output);
         #endif
 
         char *temp2 = (char *) malloc((strlen(output) + 1) * sizeof(char));
@@ -55,14 +55,14 @@ char *latin2utf8(char *input) {
 /*
  * This function converts the utf-8 encoding into latin1 ISO_8859-1.
  */
-char *utf82latin(char *input) {
+char *utf8_to_latin(char *input) {
     if (input && strlen(input) > 0) {
         iconv_t cd = iconv_open("ISO_8859-1", "UTF-8");
 
         char temp[strlen(input)];
         memcpy(temp, input, strlen(input) + 1);
 
-        char *in_buf = &temp[0];
+        char *in_buffer = &temp[0];
         size_t in_left = sizeof(temp);
 
         /* The more tildes and ñs that the string has, the longer the size needs to be.
@@ -70,11 +70,11 @@ char *utf82latin(char *input) {
          * double the size.
          */
         char output[strlen(temp) * 2];
-        char *out_buf = &output[0];
+        char *out_buffer = &output[0];
         size_t out_left = sizeof(output);
 
         do {
-            if (iconv(cd, &in_buf, &in_left, &out_buf, &out_left) == (size_t) -1) {
+            if (iconv(cd, &in_buffer, &in_left, &out_buffer, &out_left) == (size_t) -1) {
                 #ifdef DEBUG
                     printf("%s\n", input);
                     perror("iconv");
@@ -84,11 +84,11 @@ char *utf82latin(char *input) {
             }
         }
         while (in_left > 0 && out_left > 0);
-        *out_buf = 0;
+        *out_buffer = 0;
 
         #if defined(DEBUG) && defined(DEBUG_ENCODING)
-            printf("latin2utf8: input: %s\n", input);
-            printf("latin2utf8: output: %s\n", output);
+            printf("UTF-8 to latin: input: %s\n", input);
+            printf("UTF-8 to latin: output: %s\n", output);
         #endif
 
         char *temp2 = (char *) malloc((strlen(output) + 1) * sizeof(char));

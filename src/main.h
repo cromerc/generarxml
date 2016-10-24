@@ -25,7 +25,7 @@ struct configuration {
  * verses is the number of verses contained in the verse variable
  * verse contains the verses
  */
-struct chapterdata {
+struct chapter_data {
     int chapter;
     int current;
     int verses;
@@ -38,7 +38,7 @@ struct chapterdata {
  * chapters is the ammount of chapters that are contained in the chapter variable
  * chapter contains all of the chapters
  */
-struct bookdata {
+struct book_data {
     int current;
     int chapters;
     CHAPTER **chapter;
@@ -62,4 +62,4 @@ void cleanup();
  * Print information on the program's usage. If the argument is 1, the user
  * put something incorrect as an argument.
  */
-void printusage(int error);
+void print_usage(int error);

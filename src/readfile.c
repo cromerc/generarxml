@@ -12,7 +12,7 @@
  * This function reads Biblia.txt, searches for the information in config,
  * and stores it into an array of strings to be used later to create the xml.
  */
-int readfile() {
+int read_file() {
     FILE *file = NULL;
     CHAPTER *chapter = NULL;
     int start = 0;
@@ -126,7 +126,7 @@ int readfile() {
 
     for (j = 0; j < lines; j++) {
         if (array[j] != NULL) {
-            line = latin2utf8(array[j]);
+            line = latin_to_utf8(array[j]);
         }
         if (line != NULL) {
             if (strcmp(line, config->bible) == 0) {
