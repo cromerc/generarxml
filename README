@@ -3,6 +3,8 @@ Integrante:
         Sección 1
         MATEO 16-20
 
+El informe está en la carpeta misc que basado en la estructura de carpeta de un proyecto de GNU.
+
 Este programa necesita:
     libxml2
     libxslt
