@@ -83,6 +83,7 @@ int main(int argc, char **argv) {
 
     status = read_config(config_file);
     if (status != 0) {
+        free(config_file);
         return 1;
     }
 

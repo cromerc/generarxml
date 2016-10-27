@@ -5,7 +5,7 @@ AM_INIT_AUTOMAKE([foreign])
 
 AC_CONFIG_MACRO_DIR([m4])
 
-AC_PROG_CC
+AC_PROG_CC([gcc])
 
 AX_CHECK_COMPILE_FLAG([-std=c11], [
     CFLAGS+=" -std=c11"
@@ -45,6 +45,15 @@ http://www.libxml.org/.]))
 AM_CFLAGS=(`xml2-config --cflags --libs`)
 
 PKG_CHECK_MODULES([libxml2], [libxml-2.0])
+
+case "$host" in
+*mingw*)
+    AC_MSG_RESULT(OS Detected: $host)
+    AC_MSG_RESULT(Adding iconv flag for mingw...)
+    LDFLAGS="-liconv $AM_LDFLAGS $LDFLAGS"
+    ;;
+*)  ;;
+esac
 
 AC_CONFIG_FILES([Makefile
     src/Makefile
