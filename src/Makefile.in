@@ -100,7 +100,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_generarxml_OBJECTS = generarxml-main.$(OBJEXT) \
 	generarxml-readconfig.$(OBJEXT) generarxml-readfile.$(OBJEXT) \
-	generarxml-makexml.$(OBJEXT) generarxml-encoding.$(OBJEXT)
+	generarxml-makexml.$(OBJEXT) generarxml-encoding.$(OBJEXT) \
+	generarxml-getline.$(OBJEXT)
 generarxml_OBJECTS = $(am_generarxml_OBJECTS)
 am__DEPENDENCIES_1 =
 generarxml_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -269,7 +270,9 @@ generarxml_SOURCES = main.c \
     makexml.c \
     makexml.h \
     encoding.c \
-    encoding.h
+    encoding.h \
+    getline.c \
+    getline.h
 
 generarxml_CPPFLAGS = $(XML_CPPFLAGS)
 generarxml_LDFLAGS = $(XML_LIBS)
@@ -361,6 +364,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-encoding.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-getline.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-makexml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generarxml-readconfig.Po@am__quote@
@@ -449,6 +453,20 @@ generarxml-encoding.obj: encoding.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='encoding.c' object='generarxml-encoding.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o generarxml-encoding.obj `if test -f 'encoding.c'; then $(CYGPATH_W) 'encoding.c'; else $(CYGPATH_W) '$(srcdir)/encoding.c'; fi`
+
+generarxml-getline.o: getline.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT generarxml-getline.o -MD -MP -MF $(DEPDIR)/generarxml-getline.Tpo -c -o generarxml-getline.o `test -f 'getline.c' || echo '$(srcdir)/'`getline.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/generarxml-getline.Tpo $(DEPDIR)/generarxml-getline.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='getline.c' object='generarxml-getline.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o generarxml-getline.o `test -f 'getline.c' || echo '$(srcdir)/'`getline.c
+
+generarxml-getline.obj: getline.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT generarxml-getline.obj -MD -MP -MF $(DEPDIR)/generarxml-getline.Tpo -c -o generarxml-getline.obj `if test -f 'getline.c'; then $(CYGPATH_W) 'getline.c'; else $(CYGPATH_W) '$(srcdir)/getline.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/generarxml-getline.Tpo $(DEPDIR)/generarxml-getline.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='getline.c' object='generarxml-getline.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(generarxml_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o generarxml-getline.obj `if test -f 'getline.c'; then $(CYGPATH_W) 'getline.c'; else $(CYGPATH_W) '$(srcdir)/getline.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
