@@ -16,6 +16,14 @@ Para compilar el programa:
     ./configure
     make
 
+Para compilar para windows 32bit:
+    ./configure --host=i686-w64-mingw32
+    make
+
+Para compilar para windows 64bit:
+    ./configure --host=x86_64-w64-mingw32
+    make
+
 Para instalar el programa:
     make install
 

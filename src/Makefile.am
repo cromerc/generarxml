@@ -14,4 +14,3 @@ generarxml_SOURCES = main.c \
 generarxml_CPPFLAGS = $(XML_CPPFLAGS)
 generarxml_LDFLAGS= $(XML_LIBS)
 generarxml_LDADD = $(libxml2_LIBS) $(LDFLAGS)
-# -liconv
